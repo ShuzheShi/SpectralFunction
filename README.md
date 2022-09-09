@@ -1,19 +1,17 @@
 # SpectralFunction
 project on spectral function reconstruction from correlation data.
 
-Discuss the ill-posedness of the reconstruction problem by performing continuous eigenstate decomposition, (aka. generalized Fourier Transform); 
+Discuss the ill-posedness of the reconstruction problem by performing continuous eigenstate decomposition, (aka. generalized Fourier Transform).
 Show Neural Network representation and MEM results in both generalized coordinate and momentum spaces.
 
-Cite this work as,
-
-* L. Wang, S. Shi, and K. Zhou, 
-*Reconstructing Spectral Functions via Automatic Differentiation*,
-ArXiv:2111.14760 [Hep-Lat, Physics:Hep-Ph] (2021). 
-Link to HEPinsipre(https://inspirehep.net/literature/1978876).
-
-* S. Shi, L. Wang, and K. Zhou, 
-*Rethinking the ill-posedness of the spectral function reconstruction - why is it fundamentally hard and how Artificial Neural Networks can help*, 
-ArXiv:2201.02564 [Hep-Ph] (2022). 
+Cite this work as,<br>
+* L. Wang, S. Shi, and K. Zhou, <br>
+*Reconstructing Spectral Functions via Automatic Differentiation*,<br>
+ArXiv:2111.14760 [Hep-Lat, Physics:Hep-Ph] (2021). <br>
+Link to HEPinsipre(https://inspirehep.net/literature/1978876).<br>
+* S. Shi, L. Wang, and K. Zhou, <br>
+*Rethinking the ill-posedness of the spectral function reconstruction - why is it fundamentally hard and how Artificial Neural Networks can help*, <br>
+ArXiv:2201.02564 [Hep-Ph] (2022). <br>
 Link to HEPinsipre(https://inspirehep.net/literature/2005569).
 
 ## Getting Started
