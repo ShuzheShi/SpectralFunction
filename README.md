@@ -5,7 +5,9 @@ Discuss the ill-posedness of the reconstruction problem by performing continuous
 Show Neural Network representation and MEM results in both generalized coordinate and momentum spaces.
 
 Cite this work as,
+
 L. Wang, S. Shi, and K. Zhou, *Reconstructing Spectral Functions via Automatic Differentiation*, ArXiv:2111.14760 [Hep-Lat, Physics:Hep-Ph] (2021).
+
 S. Shi, L. Wang, and K. Zhou, *Rethinking the ill-posedness of the spectral function reconstruction - why is it fundamentally hard and how Artificial Neural Networks can help*, ArXiv:2201.02564 [Hep-Ph] (2022).
 
 ## Getting Started
