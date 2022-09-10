@@ -33,16 +33,23 @@ data/fig5/
 ```
 
 **1**. Generate NN results
-```python
 
+```python
+python NN_comp.py --width 64 --depth d
+python NNspectrum.py --noise 0 --l2 1E-3
+python P2Pspectrum.py --noise 0 --l2 1E-3
 ```
 
+The code requires Python >= 3.8 and PyTorch >= 1.2. You can configure on CPU machine and accelerate with a recent Nvidia GPU card. The depth parameter is $d = l-1$, which can be chosen from 0 to 3 to reproduce comparisons of Figure 3 in ArXiv:2201.02564. The other two commands are adopting NN and NN-P2P to reconstruct spectral functions, respectively.
+
 **2.** Generate MEM results and perform generalized Fourier Transformation on NN results
+
 ```python
 python mem.py
 ```
 
 **3.** Make the plots including analytical results, run the mathematica notebook ```plot.nb```.
+
 * Note 1: output files from step **1** and **2** are also included in ```data/fig*/``` directories. One may make the plots directly without going through the data-generation steps.
 * Note 2: In order to load the plotting scripts, ```plot.nb``` and ```mathematica_package/``` shall be put in the same directory.
 
