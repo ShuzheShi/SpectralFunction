@@ -62,7 +62,9 @@ python P2Pspectrum.py --noise 1 --l2 1E-3
 python mem.py
 ```
 
-### 3. Make the plots including analytical results, run the mathematica notebook ```plot.nb```.
+### 3. Make the plots including analytical results.
+
+Run the mathematica notebook ```plot.nb```.
 
 * Note 1: output files from step **1** and **2** are also included in ```data/fig*/``` directories. One may make the plots directly without going through the data-generation steps.
 * Note 2: In order to load the plotting scripts, ```plot.nb``` and ```mathematica_package/``` shall be put in the same directory.
