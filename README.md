@@ -21,13 +21,18 @@ The code consist of two parts, MEM result generator and NN result generator.
 ### 0. Input files
 
 Although more files are provided in ```data/```, the following files are needed for running step **1** and **2**.
+
+Needed for the reconstruction code:
 ```
-data/fig3/
-  True_D.txt, True_rho.txt
+data/fig3/True_D.txt, data/fig4/True_D.txt, data/fig5/True_D.txt
+```
+Needed for plotting: 
+```
+data/fig3/True_rho.txt
 data/fig4/
-  True_D.txt, True_rho.txt, True_rho_D_s.txt
+  True_rho.txt, True_rho_D_s.txt
 data/fig5/
-  True_D.txt, True_rho.txt, True_rho_D_s.txt
+  True_rho.txt, True_rho_D_s.txt
 ```
 
 ### 1. Generate NN results
