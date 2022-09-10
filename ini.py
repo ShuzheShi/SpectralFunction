@@ -2,27 +2,6 @@ import torch
 
 def initial(method):
     print(torch.__version__)
-    
-    # Setting file folder
-    import os
-    def mkdir(path):
-        folder = os.path.exists(path)
-        if not folder:
-            os.makedirs(path)
-            print ("--- new folder ----")
-
-        else:
-            print ("--- folder exists ---")
-
-    file = ('{}/figures'.format(method))
-    mkdir(file)
-    # file = ('reconBW/{}/model'.format(method))
-    # mkdir(file)
-    file = ('{}/Dtau'.format(method))
-    mkdir(file)
-    file = ('{}/rho'.format(method))
-    mkdir(file)
-
     # setting device on GPU if available, else CPU
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     # device = torch.device('cpu')
