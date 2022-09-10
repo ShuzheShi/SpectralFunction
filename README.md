@@ -36,13 +36,12 @@ data/fig5/
 ```
 
 ### 1. Generate NN results
-For fig. 3
+For fig. 3 (The depth parameter is $d = l-1$, which can be chosen from 0 to 3.)
 ```python
 python NN_comp.py --width 64 --depth 0
 python NN_comp.py --width 64 --depth 1
 python NN_comp.py --width 64 --depth 2
 python NN_comp.py --width 64 --depth 3
-python NN_comp.py --width 64 --depth 4
 ```
 For fig. 4
 ```python
@@ -51,11 +50,11 @@ python P2Pspectrum.py --noise 0 --l2 1E-3
 ```
 For fig. 5
 ```python
-python NNspectrum.py --noise 4 --l2 1E-3
-python P2Pspectrum.py --noise 4 --l2 1E-3
+python NNspectrum.py --noise 1 --l2 1E-3
+python P2Pspectrum.py --noise 1 --l2 1E-3
 ```
 
-* Note: The code requires Python >= 3.8 and PyTorch >= 1.2. You can configure on CPU machine and accelerate with a recent Nvidia GPU card. The depth parameter is $d = l-1$, which can be chosen from 0 to 3 to reproduce comparisons of Figure 3 in ArXiv:2201.02564. The other two commands are adopting NN and NN-P2P to reconstruct spectral functions, respectively.
+* Note: The code requires Python >= 3.8 and PyTorch >= 1.2. You can configure on CPU machine and accelerate with a recent Nvidia GPU card. 
 
 ### 2. Generate MEM results and perform generalized Fourier Transformation on NN results
 
