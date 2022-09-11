@@ -268,9 +268,9 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
     #     print('Early stopping!' )
     #     break
 
-    if epoch > args.maxiter and (running_loss/25 - loss.item())>= 0:
-        print('Early stopping!' )
-        break
+    # if epoch > args.maxiter and (running_loss/25 - loss.item())>= 0:
+    #     print('Early stopping!' )
+    #     break
 
     running_loss = 0.0
 
