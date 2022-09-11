@@ -31,8 +31,7 @@ omegai = torch.linspace(domegai,omega_up,steps=omegal).to(device) #,requires_gra
 taul = 25
 tau_up = 100
 dtaui = tau_up/taul
-taui = torch.linspace(0.001 , tau_up - dtaui - 0.001,steps=taul).to(device)
-
+taui = torch.linspace(0.001, tau_up - dtaui - 0.001, steps=taul).to(device)
 
 input = torch.ones(1).to(device) # ,requires_grad=True
 
@@ -95,7 +94,6 @@ class Net(nn.Module):
         self.output = torch.nn.Sequential(nn.Linear(args.width,omegal,bias=False),nn.Softplus())
         # self.output = torch.nn.Sequential(nn.Linear(args.width,omegal,bias=False))
 
-
     def forward(self, x):
         z = self.input(x)
         y = self.latent(z)
@@ -117,16 +115,14 @@ print('parameters_count:',count_parameters(nnrho))
 #############################################################################################
 # import  mock  data #
 ######################
-
-truth = np.loadtxt('rho.txt', delimiter='\t', unpack=True)
-if args.noise == 4:
-    data = np.loadtxt('True_D_noise=1e-4.txt', delimiter='\t', unpack=True)
+if args.noise == 1:
+    directory = './data/fig5'
 else:
-    data = np.loadtxt('True_D_nonoise.txt', delimiter='\t', unpack=True)
+    directory = './data/fig4'
 
+data = np.loadtxt('{}/True_D.txt'.format(directory), delimiter='\t', unpack=True)
 taui =  torch.from_numpy(data[0]).float().to(device)
 target =  torch.from_numpy(data[1]).float().to(device)
-
 
 taul = len(taui)
 tau_up = max(taui)
@@ -134,8 +130,6 @@ dtaui = tau_up/taul
 
 taui_p = taui[:-1] + dtaui/2
 target_p = (target[1:] - target[:-1])/dtaui
-
-
 
 out = (nnrho(input))*omegai
 out_old = out
@@ -220,7 +214,6 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
         l2 = l2_lambda * sum([(p**2).sum() for p in nnrho.output.parameters()])
         loss+= l2/2
 
-
         running_loss += loss.item()
 
         loss.backward()
@@ -231,32 +224,19 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
             print('[%d, %5d] chi2: %.8e lr: %.10f loss: %.8e' % 
                 (epoch + 1 + args.epochs, i + 1, chis, optimizer.param_groups[0]['lr'],loss.item()))
     
-
     if epoch > args.maxiter and (running_loss/25 - loss.item())>= 0:
         print('Early stopping!' )
         break
 
     running_loss = 0.0
 
-
 print('Finished Training')
 elapsed = time.time() - t
 print('Cost Time = ',elapsed)
 
 #############################################################################################
-# plot figures and export #
+# export #
 ############
-
 out = (nnrho(input))*omegai
-output = D(taui,omegai,out)
-
-chis = chi2(output.cpu().detach().numpy(),target.cpu().detach().numpy())
-dKL = Dkl(out.cpu().detach().numpy(),truth)
-mse = ((out.cpu().detach().numpy()-truth)**2).sum()
-print('Chi2(Dt) = ', chis)
-print('D_KL(rho) = ', dKL)
-print('MSE(rho) = ', mse)
-
-from plotfig import plotfigure, saveresults
-plotfigure(taui,omegai,truth,out,output,target)
-saveresults("NN",omegai,target,out,output)
+np.savetxt('{}/Rec_rho_NN.txt'.format(directory), \
+         np.column_stack((omegai.cpu().detach().numpy(),out.cpu().detach().numpy())), fmt='%8f\t%.10f') 

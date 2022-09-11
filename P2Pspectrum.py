@@ -30,7 +30,6 @@ omega_up = 20
 domegai = omega_up/omegal
 omegai = torch.linspace(domegai,omega_up,steps=omegal).to(device) #,requires_grad=True
 
-
 taul = 25
 tau_up = 100
 dtaui = tau_up/taul
@@ -114,15 +113,14 @@ print('parameters_count:',count_parameters(nnrho))
 #############################################################################################
 # import  mock  data #
 ######################
-truth = np.loadtxt('rho.txt', delimiter='\t', unpack=True)
-if args.noise == 4:
-    data = np.loadtxt('True_D_noise=1e-4.txt', delimiter='\t', unpack=True)
+if args.noise == 1:
+    directory = './data/fig5'
 else:
-    data = np.loadtxt('True_D_nonoise.txt', delimiter='\t', unpack=True)
+    directory = './data/fig4'
 
+data = np.loadtxt('{}/True_D.txt'.format(directory), delimiter='\t', unpack=True)
 taui =  torch.from_numpy(data[0]).float().to(device)
 target =  torch.from_numpy(data[1]).float().to(device)
-
 
 taul = len(taui)
 tau_up = max(taui)
@@ -130,8 +128,6 @@ dtaui = tau_up/taul
 
 taui_p = taui[:-1] + dtaui/2
 target_p = (target[1:] - target[:-1])/dtaui
-
-
 
 out = (nnrho(input))*omegai
 out_old = out
@@ -175,7 +171,6 @@ else:
 
         running_loss = 0.0
 
-
     torch.save(nnrho, 'p2pRho{}_{}_{}'.format(args.Index,args.noise,args.epochs))
 
 #############################################################################################
@@ -199,7 +194,6 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
         chis = loss.item()
         running_loss += loss.item()
 
-
         loss.backward()
         optimizer.step()
         # scheduler.step()
@@ -207,10 +201,6 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
         if (i % 25 == 24)&(epoch % 50 == 49) :    # print every 20 epoches
             print('[%d, %5d] chi2: %.8e lr: %.10f loss: %.8e' % 
                 (epoch + 1 + args.epochs, i + 1, chis, optimizer.param_groups[0]['lr'], loss.item()))
-    
-    # if chis< 10**(-args.noise * 2 - 1):
-    #     print('Early stopping!' )
-    #     break
 
     if epoch > args.maxiter and (running_loss/25 - loss.item())>=0:
         print('Early stopping!' )
@@ -218,24 +208,13 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
 
     running_loss = 0.0
 
-
 print('Finished Training')
 elapsed = time.time() - t
 print('Cost Time = ',elapsed)
 
 #############################################################################################
-# plot figures and export #
+# export #
 ############
 out = (nnrho(input).reshape(-1))*omegai
-output = D(taui,omegai,out)
-
-chis = chi2(output.cpu().detach().numpy(),target.cpu().detach().numpy())
-dKL = Dkl(out.cpu().detach().numpy(),truth)
-mse = chi2(out.cpu().detach().numpy(),truth)
-print('Chi2(Dt) = ', chis)
-print('D_KL(rho) = ', dKL)
-print('MSE(rho) = ', mse)
-
-from plotfig import plotfigure, saveresults
-plotfigure(taui,omegai,truth,out,output,target)
-saveresults("p2p",omegai,target,out,output)
+np.savetxt('{}/Rec_rho_NNP2P.txt'.format(directory), \
+         np.column_stack((omegai.cpu().detach().numpy(),out.cpu().detach().numpy())), fmt='%8f\t%.10f') 
