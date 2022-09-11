@@ -136,13 +136,11 @@ print('parameters_count:',count_parameters(nnrho))
 #############################################################################################
 # import  mock  data #
 ######################
-data_truth = np.loadtxt('True_rho.txt', delimiter='\t', unpack=True)
-data = np.loadtxt('True_D.txt', delimiter='\t', unpack=True)
+directory='./data/fig3'
+data = np.loadtxt('{}/True_D.txt'.format(directory), delimiter='\t', unpack=True)
 
-truth = data_truth[1]
 taui =  torch.from_numpy(data[0]).float().to(device)
 target =  torch.from_numpy(data[1]).float().to(device)
-
 
 taul = len(taui)
 tau_up = max(taui)
@@ -150,7 +148,6 @@ dtaui = tau_up/taul
 
 taui_p = taui[:-1] + dtaui/2
 target_p = (target[1:] - target[:-1])/dtaui
-
 
 out = (nnrho(input))
 out_old = out
@@ -279,7 +276,6 @@ for epoch in range(args.epochs*40):  # loop over the dataset multiple times
 
 dl_v, lhs , rhs = dl(omegai,rhoi,target,outputs)
 
-
 print('Finished Training')
 elapsed = time.time() - t
 print('Cost Time = ',elapsed)
@@ -289,19 +285,7 @@ print('Cost Time = ',elapsed)
 ############
 
 out = (nnrho(input))
-output = D(taui,omegai,out)
-
-chis = chi2(output.cpu().detach().numpy(),target.cpu().detach().numpy())
-
-print('Chi2(Dt) = ', chis)
-print('S(Dt) = ', l2.item())
-
-from plotfig import plotfigure, saveresults
-plotfigure(taui,omegai,truth,out,output,target)
-saveresults("NN",omegai,target,out,output)
-
-np.savetxt('{}/{}_noise{}_l2{:.1E}_s{:.1E}_{}_d{}.txt'.format("NN",args.Index,args.noise,args.l2,args.slambda,"linear",args.depth)\
-    , np.column_stack((steps,rec_loss,dlv)),fmt='%6f %10e %10e')
-
-np.savetxt('{}/test_{}_d{}.txt'.format("NN","linear",args.depth), \
+np.savetxt('{}/Rec_rho_NN_d{}_1e-06.txt'.format(directory, args.depth), \
+         np.column_stack((omegai.cpu().detach().numpy(),out.cpu().detach().numpy())), fmt='%8f\t%.10f') 
+np.savetxt('{}/test_{}_d{}.txt'.format(directory,"linear",args.depth), \
     np.column_stack((lhs.reshape(-1).detach().numpy(),rhs.sum(dim = 0).reshape(-1).detach().numpy())),fmt='%10e %10e') 
