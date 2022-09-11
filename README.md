@@ -45,13 +45,13 @@ python NN_comp.py --width 64 --depth 3
 ```
 For fig. 4
 ```python
-python NNspectrum.py --noise 0 --l2 1E-3
-python P2Pspectrum.py --noise 0 --l2 1E-3
+python NNspectrum.py --noise 0 --l2 1E-2 --maxiter 5000
+python P2Pspectrum.py --noise 0 --l2 1E-2
 ```
 For fig. 5
 ```python
-python NNspectrum.py --noise 1 --l2 1E-3
-python P2Pspectrum.py --noise 1 --l2 1E-3
+python NNspectrum.py --noise 1 --l2 1E-2 --maxiter 1000
+python P2Pspectrum.py --noise 1 --l2 1E-2
 ```
 
 * Note: The code requires Python >= 3.8 and PyTorch >= 1.2. You can configure on CPU machine and accelerate with a recent Nvidia GPU card. 
